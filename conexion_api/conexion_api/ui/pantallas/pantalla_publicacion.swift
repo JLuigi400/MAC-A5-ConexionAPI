@@ -9,25 +9,50 @@ import SwiftUI
 
 struct PantallaPublicacion: View {
     var id: Int
-    
     @Environment(ControladorGeneral.self) var controlador
     
     var body: some View {
-        switch (controlador.estado){
-            case .descargando_datos:
-                Text("Descargando los datos...")
-                    .onAppear{
-                        controlador.descargar_publicaciones(id: id)
+        if( controlador.publicacion == nil){
+            switch(controlador.estado){
+                case .descargando_publicacion:
+                    Text("Descargando los datos")
+                    
+                case .en_espera:
+                    Text("-----")
+                        .onAppear{
+                            controlador.descargar_publicacion(id: id)
+                        }
+                Text("Publicacion: \(controlador.publicacion?.title ?? "")")
+                
+                ForEach(controlador.publicacion?.comentarios ?? [Comentario]()){ Comentario in
+                    Text("Comentario: \(Comentario.body)")
+                    Text("Escrito por: \(Comentario.name)")
                 }
-            case .mostrando_datos:
-                Text("\(controlador.publicaciones)")
-            case .error_en_descargar:
-                Text("Existe un error en la descarga")
+                    
+                case .error_en_descarga:
+                    Text("Existe un error en la descarga")
+                default:
+                    Text("Si ves esto, puedes mostrar esta pantalla por una galleta.")
+            }
+        }
+        else {
+            Text("\(controlador.estado)")
+                    
+            Text("Publicacion: \(controlador.publicacion?.title ?? "")")
+            ScrollView(.horizontal) {
+                HStack{
+                    ForEach(controlador.publicacion?.comentarios ?? [Comentario]()){ comentario in
+                        Text("Comentario: \(comentario.body)")
+                        Text("Escrito por: \(comentario.name)")
+                                
+                    }
+                }
+            }
         }
     }
 }
 
 #Preview {
-    PantallaPublicacion(id: 1)
+    PantallaPublicacion(id: 2)
         .environment(ControladorGeneral())
 }

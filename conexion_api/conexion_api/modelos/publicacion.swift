@@ -5,14 +5,16 @@
 //  Created by alumno on 3/13/26.
 //
 
-/// Existen 3 tipos de protocolo de convertir la info JSON a dato valido para Switf UI
-///  Decodable -> Transforma archivos JSON a Swift
-///  Encodable -> Transforma Swift a JSON
-///  Codable -> Realiza todas las anteriores
+/// Existen tres tipos de protocolos para convertir la informacion de JSON a datos validos para Swift
+/// DEcodable: Transformar de JSON a Swift
+/// Encodable: Transformar de Swift a JSON
+/// Codable: Todas las anteriores
 
 struct Publicacion: Identifiable, Codable {
     let userId: Int
     let id: Int
     let title: String
     let body: String
+    
+    var comentarios: [Comentario]?
 }

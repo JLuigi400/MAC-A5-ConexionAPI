@@ -2,11 +2,12 @@
 //  estados_controlador_general.swift
 //  conexion_api
 //
-//  Created by alumno on 3/13/26.
+//  Created by Jadzia Gallegos on 13/03/26.
 //
 
 enum EstadosControladorGeneral{
-    case descargando_datos
-    case mostrando_datos
-    case error_en_descargar
+    case descargando_publicaciones
+    case en_espera
+    case descargando_publicacion
+    case error_en_descarga
 }

@@ -10,6 +10,7 @@ import SwiftUI
 @main
 struct conexion_apiApp: App {
     @State var controlador_general = ControladorGeneral()
+    
     var body: some Scene {
         WindowGroup {
             Inicio()
@@ -18,7 +19,7 @@ struct conexion_apiApp: App {
     }
 }
 
-#Preview {
+#Preview{
     Inicio()
         .environment(ControladorGeneral())
 }
