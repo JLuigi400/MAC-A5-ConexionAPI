@@ -12,20 +12,27 @@ struct MenuBase: View {
     
     var body: some View {
         TabView {
-            Tab("Publicaciones", systemImage: "tray.and.arrow.down.fill"){
+            Tab("SISTEMA", systemImage: "terminal.fill") {
                 Inicio()
             }
             .badge(controlador.publicaciones.count)
             
-            Tab("Perfil", systemImage: "tray.and.arrow.up.fill"){
-                Text("Deberia ir a una pantalla de perfil")
+            Tab("PERFIL", systemImage: "person.fill") {
+                // Pantalla normal
+                ZStack {
+                    Color("wilyBackground").ignoresSafeArea()
+                    Text("NIVEL DE SEGURIDAD 0")
+                        .foregroundColor(Color("wilySecondary"))
+                }
             }
             
-            Tab("Configuración", systemImage: "person.crop.circle.fill"){
-                Text("Pantalla de Configuración")
+            Tab("DEBUG_ERROR", systemImage: "ant.fill") {
+                // SIMULADOR DE ERROR: Aquí probamos la WilyErrorView
+                WilyErrorView()
             }
             .badge("!")
         }
+        .tint(Color("wilySecondary"))
     }
 }
 

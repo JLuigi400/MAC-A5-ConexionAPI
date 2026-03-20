@@ -31,16 +31,16 @@ class ServicioAPI{
             print("\(#function) Error: URL mal escrita. Por favor revisa...")
         }
         
-        catch ErroresAPI.codigo_respuesta_erroneo{
-            print("\(#function) Error: Código de estado erroneo. Por favor revisa...")
+        catch ErroresAPI.codigo_respuesta_erroneo {
+            print("WILY_LOG [ERROR]: El servidor ha rechazado mi código. Código de estado erróneo.")
         }
         
         catch ErroresAPI.peticion_invalida{
             print("\(#function) Error: Petición invalida. Por favor revisa...")
         }
         
-        catch ErroresAPI.falla_en_la_codificacion{
-            print("\(#function) Error: el tipo de dato \(Tipo.self) tiene campos ERRONEOS. Por favor revisa...")
+        catch ErroresAPI.falla_en_la_codificacion {
+            print("WILY_LOG [ALERTA]: El tipo de dato \(Tipo.self) no encaja en mis planos de construcción.")
         }
         
         catch {
