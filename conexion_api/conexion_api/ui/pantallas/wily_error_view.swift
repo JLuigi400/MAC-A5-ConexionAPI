@@ -8,42 +8,63 @@
 import SwiftUI
 
 struct WilyErrorView: View {
-    @State private var mensajeActual = WilyMensajes.obtenerAleatoria()
+    // Generamos un mensaje nuevo cada vez que se carga la vista
+    @State private var mensajeDeWily = WilyMensajes.obtenerAleatoria()
     
     var body: some View {
-        VStack(spacing: 25) {
-            Image(systemName: "bolt.trianglebadge.exclamationmark.fill") // Placeholder mientras tienes el logo
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 80, height: 80)
-                .foregroundColor(Color("wilyDanger"))
-                .blink()
+        ZStack {
+            // Fondo oscuro constante
+            Color("wilyBackground").ignoresSafeArea()
             
-            VStack(spacing: 12) {
-                Text("SISTEMA_CORRUPTO")
-                    .font(.system(.title3, design: .monospaced))
-                    .bold()
-                    .foregroundColor(Color("wilyDanger"))
+            VStack(spacing: 30) {
+                // LOGO OFICIAL DEL DR. WILY
+                Image("wily_logo")
+                    .resizable()
+                    .interpolation(.none) // Mantiene los píxeles nítidos (estilo Retro)
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 250, height: 200)
+                    .blink() // Nuestra animación de parpadeo de alerta
                 
-                Text(mensajeActual) // Mensaje aleatorio
-                    .font(.system(.body, design: .monospaced))
-                    .foregroundColor(Color("wilyText"))
-                    .multilineTextAlignment(.center)
+                VStack(spacing: 15) {
+                    Text("⚠ SISTEMA BLOQUEADO ⚠")
+                        .font(.system(.title3, design: .monospaced))
+                        .bold()
+                        .foregroundColor(Color("wilyDanger"))
+                    
+                    // Cuadro de texto con estilo de terminal
+                    Text(mensajeDeWily)
+                        .font(.system(.body, design: .monospaced))
+                        .foregroundColor(Color("wilyText"))
+                        .multilineTextAlignment(.center)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color("wilyPrimary").opacity(0.2))
+                        .overlay(
+                            Rectangle()
+                                .stroke(Color("wilyPrimary"), lineWidth: 2)
+                        )
+                }
+                .padding(.horizontal, 30)
+                
+                // Botón de reintento con estilo de interfaz de NES
+                Button(action: {
+                    mensajeDeWily = WilyMensajes.obtenerAleatoria()
+                }) {
+                    HStack {
+                        Image(systemName: "arrow.clockwise")
+                        Text("REINTENTAR ACCESO")
+                    }
+                    .font(.system(.subheadline, design: .monospaced))
                     .padding()
-                    .border(Color("wilyPrimary"), width: 1)
+                    .background(Color("wilyPrimary"))
+                    .foregroundColor(Color("wilyText"))
+                    .overlay(
+                        Rectangle()
+                            .stroke(Color("wilySecondary"), lineWidth: 1)
+                    )
+                }
             }
-            .padding()
-            
-            Button("REINTENTAR") {
-                mensajeActual = WilyMensajes.obtenerAleatoria() // Cambia el mensaje al pulsar
-            }
-            .font(.system(.caption, design: .monospaced))
-            .padding()
-            .background(Color("wilyPrimary"))
-            .foregroundColor(.white)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color("wilyBackground"))
     }
 }
 
