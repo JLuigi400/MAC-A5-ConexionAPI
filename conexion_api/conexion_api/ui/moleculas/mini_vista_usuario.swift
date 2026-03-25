@@ -12,5 +12,6 @@ struct MiniVistaUsuario: View {
     
     var body: some View {
         Text("Nombre: \(usuario.name)")
+            .foregroundStyle(Color.blue)
     }
 }

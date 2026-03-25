@@ -91,6 +91,6 @@ struct PantallaPublicacion: View {
 }
 
 #Preview {
-    PantallaPublicacion(id: 2)
+    PantallaPublicacion(id: 5)
         .environment(ControladorGeneral())
 }
