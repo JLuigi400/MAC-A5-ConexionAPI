@@ -16,19 +16,19 @@ struct PantallaUsuario: View {
         
         VStack{
             switch( gestor_usuario.estado){
-            case .descargando:
-                Image(systemName: "arrow.down.circle")
-                    .symbolEffect(.breathe)
-                
-            case .error_en_descarga:
-                Text("Error en alguna parte")
-                
-            case .esperando:
-                if let usuario = gestor_usuario.usuario{
-                    Text("Usuario: \(usuario.name)")
-                }else{
-                    Text("Error 404, todo no encontrado")
-                }
+                case .descargando:
+                    Image(systemName: "arrow.down.circle")
+                        .symbolEffect(.breathe)
+                    
+                case .error_en_descarga:
+                    Text("Error en alguna parte")
+                    
+                case .esperando:
+                    if let usuario = gestor_usuario.usuario{
+                        Text("Usuario: \(usuario.name)")
+                    }else{
+                        Text("Error 404, todo no encontrado")
+                    }
             }
         }.onAppear(){
             gestor_usuario.descargar_usuario(id: id)

@@ -62,7 +62,14 @@ struct PantallaPublicacion: View {
                     }
                 } else {
                     // Estado de Carga / Error
-                    estadoCargaDetalle
+                    VStack{
+                        Text("ESCANEANDO...")
+                            .font(.title).bold()
+                            .foregroundStyle(Color("wilyDanger"))
+                        ProgressView()
+                            .tint(Color("wilyPrimary"))
+                    }
+                    
                 }
                 Spacer()
             }
@@ -91,6 +98,11 @@ struct PantallaPublicacion: View {
 }
 
 #Preview {
-    PantallaPublicacion(id: 5)
-        .environment(ControladorGeneral())
+    // Creamos un controlador de prueba
+    let controladorMock = ControladorGeneral()
+    // Le asignamos datos manualmente para el preview
+    controladorMock.publicacion = .mock
+    
+    return PantallaPublicacion(id: 1)
+        .environment(controladorMock)
 }

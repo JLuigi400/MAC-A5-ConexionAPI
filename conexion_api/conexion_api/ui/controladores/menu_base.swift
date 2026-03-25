@@ -37,6 +37,11 @@ struct MenuBase: View {
 }
 
 #Preview {
-    MenuBase()
-        .environment(ControladorGeneral())
+    // Creamos un controlador de prueba
+    let controladorMock = ControladorGeneral()
+    // Le asignamos datos manualmente para el preview
+    controladorMock.publicacion = .mock
+    
+    return PantallaPublicacion(id: 1)
+        .environment(controladorMock)
 }
