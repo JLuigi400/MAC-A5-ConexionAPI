@@ -14,11 +14,21 @@ struct PublicacionRow: View {
         VStack(alignment: .leading, spacing: 8) {
             // Cabecera con el ID del Usuario y el ID del Post
             HStack {
-                Text("USER_\(publicacion.userId)")
-                    .font(.system(.caption2, design: .monospaced))
-                    .padding(.horizontal, 6)
-                    .background(Color("wilySecondary"))
-                    .foregroundColor(Color("wilyBackground"))
+                // Validamos si tenemos el usuario cargado para mostrar su nombre
+                if let autor = publicacion.usuario {
+                    Text("AUTOR: \(autor.username.uppercased())")
+                        .font(.system(.caption2, design: .monospaced).bold())
+                        .padding(.horizontal, 6)
+                        .background(Color("wilySecondary"))
+                        .foregroundColor(Color("wilyBackground"))
+                } else {
+                    // Fallback en caso de que algo falle
+                    Text("USER_\(publicacion.userId)")
+                        .font(.system(.caption2, design: .monospaced))
+                        .padding(.horizontal, 6)
+                        .background(Color("wilySecondary"))
+                        .foregroundColor(Color("wilyBackground"))
+                }
                 
                 Spacer()
                 

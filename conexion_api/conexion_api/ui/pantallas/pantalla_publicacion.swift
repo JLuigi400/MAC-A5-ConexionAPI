@@ -30,6 +30,25 @@ struct PantallaPublicacion: View {
                         Text(post.body)
                             .font(.body)
                             .foregroundColor(Color("wilyText"))
+                        
+                        // --- NUEVO ENLACE AL PERFIL DEL USUARIO ---
+                        if let usuarioOrigen = post.usuario {
+                            NavigationLink(destination: PantallaUsuario(id: usuarioOrigen.id)) {
+                                
+                                HStack {
+                                    Image(systemName: "person.crop.rectangle.fill")
+                                    Text("INSPECCIONAR CREATOR: \(usuarioOrigen.username.uppercased())")
+                                        .font(.system(.caption, design: .monospaced))
+                                }
+                                .padding(10)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .background(Color("wilySecondary").opacity(0.15))
+                                .border(Color("wilySecondary"), width: 2)
+                                .foregroundColor(Color("wilySecondary"))
+                            }
+                            .padding(.top, 5)
+                        }
+                        // ------------------------------------------
                     }
                     .padding()
                     .overlay(Rectangle().stroke(Color("wilyPrimary"), lineWidth: 2))

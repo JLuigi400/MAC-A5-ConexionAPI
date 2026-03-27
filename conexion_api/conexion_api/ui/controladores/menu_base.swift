@@ -8,40 +8,34 @@
 import SwiftUI
 
 struct MenuBase: View {
-    @Environment(ControladorGeneral.self) var controlador
+    @Environment(ControladorGeneral.self) var controlador_general
     
     var body: some View {
         TabView {
-            Tab("SISTEMA", systemImage: "terminal.fill") {
-                Inicio()
-            }
-            .badge(controlador.publicaciones.count)
-            
-            Tab("PERFIL", systemImage: "person.fill") {
-                // Pantalla normal
-                ZStack {
-                    Color("wilyBackground").ignoresSafeArea()
-                    Text("NIVEL DE SEGURIDAD 0")
-                        .foregroundColor(Color("wilySecondary"))
+            // SECCIÓN 1: SISTEMA DE DATOS (POSTS)
+            Inicio()
+                .tabItem {
+                    Label("SISTEMA", systemImage: "terminal")
                 }
-            }
-            
-            Tab("DEBUG_ERROR", systemImage: "ant.fill") {
-                // SIMULADOR DE ERROR: Aquí probamos la WilyErrorView
-                WilyErrorView()
-            }
-            .badge("!")
+
+            // SECCIÓN 2: PERFIL DE USUARIO (TU PERFIL - ID fijo para ejemplo)
+            PantallaUsuario(id: 1)
+                .tabItem {
+                    Label("PERFIL", systemImage: "person.crop.square")
+                }
+
+            // SECCIÓN 3: CONFIGURACIÓN / DEBUG
+            VistaConfiguracion()
+                .tabItem {
+                    Label("DEBUG_ERROR", systemImage: "ladybug.fill")
+                }
         }
-        .tint(Color("wilySecondary"))
+        .tint(Color("wilyPrimary")) // Color de los iconos activos
+        .onAppear {
+            // Estilo para el TabBar al estilo Wily
+            UITabBar.appearance().unselectedItemTintColor = UIColor(named: "wilySecondary")
+            UITabBar.appearance().backgroundColor = UIColor(named: "wilyBackground")
+        }
     }
 }
 
-#Preview {
-    // Creamos un controlador de prueba
-    let controladorMock = ControladorGeneral()
-    // Le asignamos datos manualmente para el preview
-    controladorMock.publicacion = .mock
-    
-    return PantallaPublicacion(id: 1)
-        .environment(controladorMock)
-}

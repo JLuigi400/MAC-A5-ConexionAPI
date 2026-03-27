@@ -100,16 +100,29 @@ class ControladorGeneral{
     }
     
     private func _descargar_publicaciones() async {
-        let url = url_base + "/posts"
-        
-        let respuesta: [Publicacion]? = await ServicioAPI.descargar_informacion(desde: url)
-        // print(respuesta)
-        if let respuesta = respuesta {
-            publicaciones = respuesta
-            estado = .en_espera
+            let url_posts = url_base + "/posts"
+            let url_users = url_base + "/users" // Nueva ruta para traer los perfiles
+            
+            // Descargamos ambas cosas en paralelo para no perder tiempo
+            async let peticion_posts: [Publicacion]? = ServicioAPI.descargar_informacion(desde: url_posts)
+            async let peticion_users: [Usuario]? = ServicioAPI.descargar_informacion(desde: url_users)
+            
+            // Esperamos a que ambas terminen
+            if let posts = await peticion_posts, let users = await peticion_users {
+                
+                // Mapeamos los usuarios dentro de sus respectivas publicaciones
+                var postsCompletos = posts
+                for i in 0..<postsCompletos.count {
+                    // Buscamos el usuario cuyo ID coincida con el userId del post
+                    if let autor = users.first(where: { $0.id == postsCompletos[i].userId }) {
+                        postsCompletos[i].usuario = autor
+                    }
+                }
+                
+                self.publicaciones = postsCompletos
+                self.estado = .en_espera
+            } else {
+                self.estado = .error_en_descarga
+            }
         }
-        else {
-            estado = .error_en_descarga
-        }
-    }
 }

@@ -35,10 +35,6 @@ struct Inicio: View {
                                 NavigationLink {
                                     PantallaPublicacion(id: publicacion.id)
                                 } label: {
-                                    // Usamos el componente estilizado
-                                    /*Text(publicacion.title)
-                                        .foregroundStyle(Color( Color("wilySecondary")))
-                                    */
                                     PublicacionRow(publicacion: publicacion)
                                 }
                                 .buttonStyle(PlainButtonStyle())
